@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="~{index :: parent(~{::#content},~{::title})}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task</title>
+  </head>
+  <body>
+    <div id="content">
+      <form action="/tasks" method="post">
+        <h1 class="text-center text-5xl font-bold mb-4">
+          Add a new task
+        </h1>
+        <div class="relative">
+          <div
+            class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+          >
+            <svg
+              class="w-5 h-5 text-gray-900 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="4"
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            name="title"
+            class="block w-full p-4 ps-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+            placeholder="Add a new task..."
+            required
+          />
+          <button
+            type="submit"
+            class="text-white absolute end-2.5 bottom-2.5 bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+          >
+            Add Task
+          </button>
+        </div>
+      </form>
+
+      <hr class="mt-2 border-1 border-black" />
+
+      <div th:if="${loggedInUser}" class="text-center">
+        <h1 class="text-4xl font-bold underline mt-2">
+          <span th:text="${loggedinUserName}"></span>'s Tasks
+        </h1>
+      </div>
+
+      <div class="mt-4">
+        <th:block th:each="task : ${tasks}">
+          <div
+            class="w-full p-2 mb-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+          >
+            <span
+              th:classappend="${task.completed} ? 'line-through decoration-red-500 mb-2 text-2xl font-bold text-gray-900 dark:text-white' : 'mb-2 text-2xl font-bold text-gray-900 dark:text-white'"
+              th:text="${task.title}"
+              >Task Title
+            </span>
+
+            <div class="inline float-right mt-1">
+              <a
+                th:href="@{/tasks/{id}/complete(id=${task.id})}"
+                class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                >Complete</a
+              >
+              <a
+                th:href="@{/tasks/{id}/delete(id=${task.id})}"
+                class="text-white bg-red-500 hover:bg-red-600 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-600 dark:border-red-600"
+                >Delete</a
+              >
+            </div>
+          </div>
+        </th:block>
+      </div>
+    </div>
+  </body>
+</html>
