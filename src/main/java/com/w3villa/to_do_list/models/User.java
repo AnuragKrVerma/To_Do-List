@@ -10,10 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 // Lombok annotations for boilerplate code
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+//@Getter @Setter @NoArgsConstructor  @AllArgsConstructor
 @Entity // Indicates that this class is a JPA entity
 public class User implements UserDetails { // Implements UserDetails for Spring Security
     /**
@@ -106,4 +103,53 @@ public class User implements UserDetails { // Implements UserDetails for Spring 
                 ", email='" + email + '\'' +
                 '}';
     }
+
+    public User() {
+    }
+
+    public User(Long id, String name, String email, String password, Set<Task> tasks) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.tasks = tasks;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(Set<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+
 }
