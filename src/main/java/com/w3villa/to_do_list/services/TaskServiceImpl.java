@@ -1,6 +1,7 @@
 package com.w3villa.to_do_list.services;
 
 import com.w3villa.to_do_list.models.Task;
+import com.w3villa.to_do_list.models.User;
 import com.w3villa.to_do_list.repositories.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,10 @@ public class TaskServiceImpl {
      */
     public void deleteTaskById(Long id) {
         taskRepository.deleteById(id);
+    }
+
+    public List<Task> getTasksByUser(User user) {
+        return taskRepository.findByUser(user);
     }
 
     // comment this method to update an existing task

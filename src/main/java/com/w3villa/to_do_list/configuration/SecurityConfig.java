@@ -1,6 +1,7 @@
 package com.w3villa.to_do_list.configuration;
 
 import com.w3villa.to_do_list.services.CustomUserDetailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -30,8 +31,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/","/home", "/signup/**").permitAll() // Allow access to home and signup pages
-                .anyRequest().authenticated() // Require authentication for all other requests
+                .requestMatchers("/", "/home", "/signup/**").permitAll()
+                .anyRequest().authenticated()
         ).formLogin(login -> login
                 .loginPage("/login")
                 .loginProcessingUrl("/authenticate")
@@ -41,17 +42,16 @@ public class SecurityConfig {
                 .passwordParameter("password")
                 .permitAll()
         ).logout(logout -> logout
-                .logoutUrl("/logout") // URL to trigger logout
+                .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .permitAll()
-
         ).csrf(csrf -> csrf.disable());
 
-        // Build and return the security filter chain
         return http.build();
     }
+
 
     /**
      * Provides a BCryptPasswordEncoder bean for password encoding.
@@ -67,6 +67,7 @@ public class SecurityConfig {
      * Configures global authentication settings.
      * It sets the custom user details service and password encoder for authentication.
      */
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder);
     }

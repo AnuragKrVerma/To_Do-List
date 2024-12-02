@@ -14,7 +14,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Entity // Indicates that this class is a JPA entity
 public class User implements UserDetails { // Implements UserDetails for Spring Security
     /**
@@ -97,5 +96,14 @@ public class User implements UserDetails { // Implements UserDetails for Spring 
     @Override
     public boolean isEnabled() {
         return true; // User is enabled
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
